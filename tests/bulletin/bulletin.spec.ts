@@ -19,9 +19,7 @@ async function abrirModalNovaNota(page: Page) {
   await expect(page.locator('#gradeModalSubjectId')).toBeVisible({ timeout: 5000 });
 }
 
-// ─────────────────────────────────────────────
 // CASOS FELIZES
-// ─────────────────────────────────────────────
 test.describe('✅ Casos Felizes — Notas', () => {
 
   test('CF-01 | Registrar uma nota válida', async ({ page }) => {
@@ -70,9 +68,7 @@ test.describe('✅ Casos Felizes — Notas', () => {
 
 });
 
-// ─────────────────────────────────────────────
 // CASOS TRISTES
-// ─────────────────────────────────────────────
 test.describe('❌ Casos Tristes — Notas', () => {
 
   test('CT-01 | Inserir nota vazia não deve ser permitido', async ({ page }) => {
@@ -108,9 +104,7 @@ test.describe('❌ Casos Tristes — Notas', () => {
 
 });
 
-// ─────────────────────────────────────────────
 // CASOS DE BORDA
-// ─────────────────────────────────────────────
 test.describe('⚠️ Casos de Borda — Notas', () => {
 
   test('CB-01 | Inserir nota mínima permitida (0)', async ({ page }) => {
