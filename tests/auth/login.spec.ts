@@ -12,7 +12,7 @@ async function preencherLogin(page: any, email: string, senha: string) {
 }
 
 // CASOS FELIZES
-test.describe('Casos Felizes', () => {
+test.describe('✅ Casos Felizes', () => {
 
   test('CF-01 | Login com credenciais válidas redireciona para área autenticada', async ({ page }) => {
     await page.goto('/login');
@@ -44,7 +44,7 @@ await expect(page).not.toHaveURL(/\/login/);
 });
 
 // CASOS TRISTES
-test.describe('Casos Tristes', () => {
+test.describe('❌ Casos Tristes', () => {
 
   test('CT-01 | Login com senha incorreta exibe mensagem de erro', async ({ page }) => {
     await page.goto('/login');
@@ -75,7 +75,7 @@ test.describe('Casos Tristes', () => {
 });
 
 // CASOS DE BORDA
-test.describe('Casos de Borda', () => {
+test.describe('⚠️ Casos de Borda', () => {
 
   test('CB-01 | Login com e-mail em formato inválido bloqueia envio', async ({ page }) => {
     await page.goto('/login');
