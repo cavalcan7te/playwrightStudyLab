@@ -45,7 +45,7 @@ test.describe.serial('Casos Tristes - Atividades', () => {
     await page.locator('#modalDueDateQuick').selectOption('custom');
     await page.locator('#modalDueDate').fill('1111-11-12');
     await page.getByRole('button', { name: 'Salvar atividade' }).click();
-    await expect(page.getByRole('heading', { name: 'Cadastrar Atividade' })).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText('A data não pode estar no passado.', { exact: false })).toBeVisible();
   });
 
 });
