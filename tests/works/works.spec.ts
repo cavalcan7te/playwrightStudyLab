@@ -1,5 +1,12 @@
 import { test, expect } from '@playwright/test';
 
+// Helper para gerar data futura no formato YYYY-MM-DD
+function dataFutura(diasAFrente = 30): string {
+  const data = new Date();
+  data.setDate(data.getDate() + diasAFrente);
+  return data.toISOString().split('T')[0];
+}
+
 test.describe.serial('Casos Felizes - Trabalhos', () => {
 
   test('Cadastrar trabalho com dados válidos', async ({ page }) => {
@@ -51,7 +58,7 @@ test.describe.serial('Casos de Borda - Trabalhos', () => {
     await page.getByRole('button', { name: 'Novo trabalho' }).click();
     await page.locator('#workType').selectOption('Artigo');
     await page.getByRole('textbox', { name: 'Ex: Pesquisa de História...' }).fill('a');
-    await page.locator('#workDueDate').fill('2026-06-02');
+    await page.locator('#workDueDate').fill(dataFutura()); // ✅ data dinâmica
     await page.getByRole('button', { name: 'Salvar Trabalho' }).click();
     await expect(page.getByText('Trabalho criado com sucesso!')).toBeVisible({ timeout: 10000 });
   });
@@ -61,7 +68,7 @@ test.describe.serial('Casos de Borda - Trabalhos', () => {
     await page.getByRole('button', { name: 'Novo trabalho' }).click();
     await page.locator('#workType').selectOption('Artigo');
     await page.getByRole('textbox', { name: 'Ex: Pesquisa de História...' }).fill('a'.repeat(500));
-    await page.locator('#workDueDate').fill('2026-06-02');
+    await page.locator('#workDueDate').fill(dataFutura()); // ✅ data dinâmica
     await page.getByRole('button', { name: 'Salvar Trabalho' }).click();
     const valor = await page.getByRole('textbox', { name: 'Ex: Pesquisa de História...' }).inputValue();
     expect(valor.length).toBeLessThanOrEqual(500);
