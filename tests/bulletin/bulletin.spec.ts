@@ -32,38 +32,34 @@ test.describe('✅ Casos Felizes — Notas', () => {
     await page.locator('#gradeModalEndterm').fill('9');
 
     await page.getByRole('button', { name: 'Salvar nota' }).click();
-    await page.waitForTimeout(1000);
 
-    await expect(page.locator('#gradeModalSubjectId')).not.toBeVisible();
+    // ✅ Espera o modal fechar em vez de tempo fixo
+    await expect(page.locator('#gradeModalSubjectId')).not.toBeVisible({ timeout: 15000 });
   });
 
   test('CF-02 | Atualizar uma nota existente', async ({ page }) => {
     await loginEIrParaNotas(page);
 
-    // Primeiro cria uma nota com matéria 77 para garantir que existe
+    // Cria a nota primeiro
     await abrirModalNovaNota(page);
     await page.locator('#gradeModalSubjectId').selectOption('77');
     await page.locator('#gradeModalBimester').selectOption('1');
     await page.locator('#gradeModalMidterm').fill('6');
     await page.locator('#gradeModalEndterm').fill('7');
     await page.getByRole('button', { name: 'Salvar nota' }).click();
-    await page.waitForTimeout(1000);
+    await expect(page.locator('#gradeModalSubjectId')).not.toBeVisible({ timeout: 15000 });
 
-    // Agora edita essa nota clicando no botão de editar dela
-    const btnAdicionar = page.getByRole('button', { name: '+ Adicionar' }).first();
-    await btnAdicionar.waitFor({ state: 'visible', timeout: 10000 });
-    await btnAdicionar.click();
+    // Clica no ícone de editar da primeira nota
+    await page.locator('.w-7').first().click();
     await expect(page.locator('#gradeModalMidterm')).toBeVisible({ timeout: 5000 });
 
-    // Seleciona a matéria e atualiza os valores
-    await page.locator('#gradeModalSubjectId').selectOption('77');
+    // Atualiza os valores
     await page.locator('#gradeModalMidterm').fill('9');
     await page.locator('#gradeModalEndterm').fill('9');
 
-    await page.getByRole('button', { name: 'Salvar nota' }).click();
-    await page.waitForTimeout(1000);
-
-    await expect(page.locator('#gradeModalMidterm')).not.toBeVisible();
+    // ✅ Botão correto do modal de edição
+    await page.getByRole('button', { name: 'Salvar alterações' }).click();
+    await expect(page.locator('#gradeModalMidterm')).not.toBeVisible({ timeout: 15000 });
   });
 
 });
